@@ -20,10 +20,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18   # Cambio a Node 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --include=dev   # Asegura instalación de Jest
 
       - name: Set environment variables
         run: |
