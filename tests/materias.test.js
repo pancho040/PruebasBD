@@ -7,6 +7,7 @@ describe('CRUD de Materias', () => {
     
     // TEST: Obtener todas las materias
     describe('GET /api/materias', () => {
+        
         test('Debe retornar todas las materias con status 200', async () => {
             const response = await request(app)
                 .get('/api/materias')
