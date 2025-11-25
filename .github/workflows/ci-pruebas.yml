@@ -35,7 +35,7 @@ jobs:
           echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> $GITHUB_ENV
           echo "PORT=3000" >> $GITHUB_ENV
 
-      # 5️⃣ Ejecutar pruebas
+      # 5️⃣ Ejecutar pruebas con npm (evita problemas de permisos)
       - name: Run tests
         run: |
           echo "Iniciando pruebas automatizadas..."
