@@ -20,10 +20,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18   # Cambio a Node 18
+          node-version: 20
 
       - name: Install dependencies
-        run: npm install --include=dev   # Asegura instalación de Jest
+        # Mejor práctica para CI/CD: usa 'npm ci'
+        run: npm ci 
 
       - name: Set environment variables
         run: |
@@ -32,14 +33,15 @@ jobs:
           echo "PORT=3000" >> $GITHUB_ENV
 
       - name: Run tests
-        run: |
-          echo "Iniciando pruebas automatizadas..."
-          npx jest --verbose --runInBand
+        # ✅ La solución: Ejecutar el script "test" definido en package.json
+        run: npm test 
 
-      - name: Notify test results
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "Pruebas automatizadas fallidas ❌"
-          else
-            echo "Pruebas automatizadas exitosas ✅"
-          fi
+      - name: Notify successful test run
+        # Este paso solo se ejecuta si el paso anterior (npm test) fue exitoso
+        if: success()
+        run: echo "Pruebas automatizadas exitosas ✅"
+        
+      - name: Notify failed test run
+        # Este paso solo se ejecuta si el paso anterior (npm test) falló
+        if: failure()
+        run: echo "Pruebas automatizadas fallidas ❌"
